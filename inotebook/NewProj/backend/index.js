@@ -1,8 +1,10 @@
 const connectToMongo=require('./db');
 connectToMongo();
 const express = require('express')
+var cors=require('cors');
 const app = express()
 const port = 8000;
+app.use(cors());
 
 app.use(express.json());
 // Available routes
@@ -14,6 +16,6 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port at http://localhost:${port}`)
+  console.log(`iNotebook listening on port at http://localhost:${port}`)
 })
 
