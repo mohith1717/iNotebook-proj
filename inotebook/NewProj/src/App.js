@@ -14,7 +14,7 @@ function App() {
       
       <Router>
       <Navbar></Navbar>
-        <Alert message="i am your doomsday"></Alert>
+        <Alert message="i am your dooms"></Alert>
         <Home/>
         
           
