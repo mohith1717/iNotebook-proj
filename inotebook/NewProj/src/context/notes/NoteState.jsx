@@ -54,7 +54,23 @@ const NoteState = (props) => {
     setNotes(notes.concat(note));
   };
   // delteing the notes
-  const deleteNote = (id) => {
+  const deleteNote = async(id,title,description,tag) => {
+    // API 
+    const response =await fetch(
+      `${host}/api/notes/deletenote/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyZmEwNWQxYTc5ZmZhYjRmYWZhOWYyIn0sImlhdCI6MTY5NzYyMDA2MX0.AkVaWXkPpjmg8qVUyGtvA0NEMIOZVqAFDQndxA8CJls",
+        },
+        body: JSON.stringify({title,description,tag}),
+      }
+    );
+    const json =response.json();
+    console.log(json);
+    // deleting the note
     console.log("deleting the id wit" + id);
     const newNotes = notes.filter((note) => {
       return note._id !== id;
@@ -66,7 +82,7 @@ const NoteState = (props) => {
     const response =await fetch(
       `${host}/api/notes/updatenote/6527e053d7d926b0c5ae2086/${id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "auth-token":
@@ -76,15 +92,19 @@ const NoteState = (props) => {
       }
     );
     const json =response.json();
+    console.log(json);
 
     for (let index = 0; index < notes.length; index++) {
       const element = notes[index];
       if (element._id === id) {
-        element.title = title;
-        element.description = description;
-        element.tag = tag;
+        notes[index].title = title;
+        notes[index].description = description;
+        notes[index].tag = tag;
       }
+      break;
     }
+    console.log(notes);
+    setNotes(notes);
   };
 
   return (
